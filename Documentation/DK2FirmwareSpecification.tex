@@ -1,0 +1,651 @@
+\documentclass[letterpaper]{article}
+\usepackage{bytefield}
+\usepackage{mathtools}
+\usepackage{ifxetex}
+\ifxetex
+  \usepackage{fontspec}
+  \setmainfont[ExternalLocation=../Common/, 
+  					  Ligatures =TeX,
+					  BoldFont = Cabin-Bold.ttf,
+					  ItalicFont = Cabin-Italic.ttf,
+					  BoldItalicFont = Cabin-BoldItalic.ttf ]
+					  {Cabin-Regular.ttf}
+\fi
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage[table]{xcolor}
+\usepackage{hyperref}
+\usepackage{parskip}
+\usepackage{tikz}
+\usetikzlibrary{automata,positioning,fit}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\definecolor{lightgray}{gray}{0.8}
+\renewcommand{\arraystretch}{1.25}
+
+\begin{document}
+
+\title{\huge DK2 Firmware Specification}
+\author{Nirav Patel}
+\date{Revision 0.10\\
+28 April 2014}
+
+\begin{figure}
+\includegraphics[width=5in]{../Common/oculus.png}
+\end{figure}
+
+\maketitle
+\thispagestyle{empty}
+
+\lfoot{DK2 Firmware Specification}
+\cfoot{}
+\rfoot{\thepage}
+
+\newpage
+
+\tableofcontents
+
+\newpage
+
+\section{Revision History}
+
+\begin{center}
+    \begin{tabular}{ | l | l | p{8cm} |}
+    \hline
+    \cellcolor{lightgray} Revision & \cellcolor{lightgray} Date & \cellcolor{lightgray} Description \\ \hline
+    0.1 & 28-11-2013 & Preliminary specification. \\ \hline
+    0.2 & 08-12-2013 & Add camera feature report. \\ \hline
+    0.3 & 11-12-2013 & Add display feature report. \\ \hline
+    0.4 & 23-12-2013 & Add magnetometer and position calibration and LED pattern reports. \\ \hline
+    0.5 & 26-12-2013 & Add keep alive, manufacturing, and uuid reports. \\ \hline
+    0.6 & 30-01-2014 & Add temperature report, modify position report. \\ \hline
+    0.7 & 13-02-2014 & Add gyro offset report. \\ \hline
+    0.8 & 18-02-2014 & Add normals to position calibration, rename camera to tracking. \\ \hline
+    0.9 & 24-02-2014 & Add lens distortion report. \\ \hline
+    0.10 & 28-04-2014 & Add basic EDID information. \\ \hline
+    \end{tabular}
+\end{center}
+
+\newpage
+
+\section{Introduction}
+
+The Rift DK2 is interfaced using USB HID with a 1000 Hz polling rate.  The device is configured using Feature Report Gets and Sets and reports back gyroscope, accelerometer, magnetometer, and synchronization timestamps through an IN Report.  For more information about HID, see the Device Class Definition for Human Interface Devices\footnote{\url{http://www.usb.org/developers/devclass_docs/HID1_11.pdf}}
+
+\begin{itemize}
+  \item {\bfseries Vendor ID:} {\em 0x2833}
+  \item {\bfseries Product ID:} {\em 0x0021}
+  \item {\bfseries Vendor String:} {\em Oculus VR, Inc.}
+  \item {\bfseries Product String:} {\em Rift DK2}
+  \item {\bfseries Serial String:} {\em Globally unique 20 byte Base32 string generated per device}
+\end{itemize}
+
+\newpage
+
+\section{HID In Report}
+
+The 64 byte IN report on Endpoint 1 contains the sensor data.  All data is in little-endian format.  The gyro and accelerometer report data at a rate of 1000 Hz, which is also the rate at which the sample time is incremented.\\
+
+While the target rate for the host polling the device for the IN report is 1000 Hz, system or bus load can cause the polling to happen on longer intervals, dropping the reporting rate below 1000 Hz.  For this reason, the report contains fields for up to 2 samples of gyro and accelerometer data as well as a field stating the number of samples being reported.  The behavior is as follows:\\
+
+\begin{itemize}
+  \item If the number of recorded samples is $<=$ 2, the corresponding number
+   of samples is returned with NumSamples set accordingly.
+  \item If the number of recorded samples is $>$ 2, the first (NumSamples -1) samples
+   are averaged into Samples[0], while Samples[1] contains the most recent recorded sample.
+   NumSamples is set to the total original number of
+   recorded samples and Timestamp is set to that of the most recent sample; this allows for PC software to compensate the integration.
+  \item DK2 does not accumulate more then 254 samples; beyond that the
+   NumSamples is reset to 2 and only the most recent 2 samples are reported, with the Timestamp field properly incremented to indicate the loss of samples.
+\end{itemize}
+
+\begin{bytefield}[leftcurly=.,bitwidth=1.1em]{32}
+         \bitheader{0-31} \\
+	\begin{leftwordgroup}{0}
+           \bitbox{8}{ReportID = 11} & \bitbox{16}{LastCommandID} & \bitbox{8}{NumSamples}
+	\end{leftwordgroup} \\
+	\begin{leftwordgroup}{4}
+           \bitbox{16}{SampleCount} & \bitbox{16}{Temperature}
+	\end{leftwordgroup} \\
+	\begin{leftwordgroup}{8}
+           \bitbox{32}{SampleTimestamp}
+	\end{leftwordgroup} \\
+	\begin{leftwordgroup}{12}
+           \wordbox[lrt]{1}{Samples[0]}
+	\end{leftwordgroup} \\
+         \skippedwords \\
+         \wordbox[lrb]{1}{} \\
+	\begin{leftwordgroup}{28}
+           \wordbox[lrt]{1}{Samples[1]}
+	\end{leftwordgroup} \\
+         \skippedwords \\
+         \wordbox[lrb]{1}{} \\
+	\begin{leftwordgroup}{44}
+            \bitbox{16}{MagX} & \bitbox{16}{MagY}
+	\end{leftwordgroup} \\
+	\begin{leftwordgroup}{48}
+           \bitbox{16}{MagZ} & \bitbox{16}{FrameCount}
+	\end{leftwordgroup} \\
+	\begin{leftwordgroup}{52}
+	   \bitbox{32}{FrameTimestamp}
+	\end{leftwordgroup} \\
+	\begin{leftwordgroup}{56}
+	   \bitbox{8}{FrameID} & \bitbox{8}{TrackingPattern} & \bitbox{16}{TrackingCount}
+	\end{leftwordgroup} \\
+	\begin{leftwordgroup}{60}
+	   \bitbox{32}{TrackingTimestamp}
+	\end{leftwordgroup} \\
+\end{bytefield}
+
+\begin{itemize}
+  \item {\bfseries ReportID} (8 bits): The USB Report ID for this report is 11.
+  \item {\bfseries LastCommandID} (16 bits): Contains the CommandID from the last Feature Report set on DK2.
+  \item {\bfseries NumSamples} (8 bits): The number of samples the report represents as described above.
+  \item {\bfseries SampleCount} (16 bits): A running counter of samples, for the number of the first sample in the report.  As the internal sampling rate targets 1000 Hz, this unit is close to milliseconds.
+  \item {\bfseries Temperature} (16 bits): The most recent internal sensor temperature recorded by the DK2.  The value is in two's complement format, in units of centidegrees Celsius. 
+  \item {\bfseries SampleTimestamp} (32 bits): A microsecond timestamp of the last sensor sample in the packet.  This is recorded on the same clock as the FrameTimestamp and TrackingTimestamp.
+  \item {\bfseries Samples} (128 bits): Each sample contains X, Y, and Z data for the gyro and accelerometer.  Specified below.
+  \item {\bfseries MagX, MagY, MagZ} (16 bits each): The most recent data available from the magnetometer.  The three axes are sampled simultaneously at up to 100 Hz.  Note that consecutive reports may contain the same magnetometer data.  The data is two's complement in units of $10\textsuperscript{-4}$ gauss.
+  \item {\bfseries FrameCount} (16 bit): A running counter of frames sent to the display, incremented at each vsync.
+  \item {\bfseries FrameTimestamp} (32 bit): A microsecond timestamp of the last vsync sent to the display.  This is recorded on the same clock as the SampleTimestamp and TrackingTimestamp.
+  \item {\bfseries FrameID} (8 bit): The green value of the top left pixel in the last frame sent to the display.  This is used to identify specific frames to measure the end to end latency from motion to photon.
+  \item {\bfseries TrackingPattern} (8 bit): The index of the last tracking LED pattern exposed to the camera.
+  \item {\bfseries TrackingCount} (16 bit): A running counter of camera frames triggered by the headset.
+  \item {\bfseries TrackingTimestamp} (32 bit): A microsecond timestamp of the last camera exposure.  This is recorded on the same clock as the SampleTimestamp and FrameTimestamp.
+\end{itemize}
+
+\subsection{Accelerometer and Gyro Sample}
+
+The X, Y, and Z axes of the gyro and accelerometer are sampled simultaneously.  The accelerometer fields are two's complement format and 21 bits each. They are in units of $\frac{m}{s\textsuperscript{2}}\cdot 10\textsuperscript{-4}$.  The gyroscope fields are two's complement and 21 bits each. They are in units of $\frac{\theta}{s}\cdot 10\textsuperscript{-4}$ in radians.\\
+
+\begin{bytefield}[leftcurly=.,bitwidth=1.1em]{32}
+         \bitheader{0-31} \\
+	\begin{leftwordgroup}{0}
+           \bitbox{21}{AccelX} & \bitbox{11}{AccelY[0:10]} 
+	\end{leftwordgroup} \\
+	\begin{leftwordgroup}{4}
+           \bitbox{10}{AccelY[11:20]} & \bitbox{21}{AccelZ} & \bitbox{1}{\color{lightgray}\rule{\width}{\height}}
+	\end{leftwordgroup} \\
+	\begin{leftwordgroup}{8}
+           \bitbox{21}{GyroX} & \bitbox{11}{GyroY[0:10]} 
+	\end{leftwordgroup} \\
+	\begin{leftwordgroup}{12}
+           \bitbox{10}{GyroY[11:20]} & \bitbox{21}{GyroZ} & \bitbox{1}{\color{lightgray}\rule{\width}{\height}}
+	\end{leftwordgroup} \\
+\end{bytefield}
+
+\newpage
+
+\section{Feature Reports}
+
+\subsection{Tracking}
+
+The 13 byte Tracking report has a ReportID of 12.  It configures the infrared tracking LEDs and camera synchronization. \\
+
+\begin{bytefield}[leftcurly=.,bitwidth=1.1em]{32}
+         \bitheader{0-31} \\
+	\begin{leftwordgroup}{0}
+           \bitbox{8}{ReportID = 12} & \bitbox{16}{CommandID} & \bitbox{8}{Pattern}
+	\end{leftwordgroup} \\
+	\begin{leftwordgroup}{4}
+           \bitbox{1}{a} & \bitbox{1}{b} & \bitbox{1}{c} & \bitbox{1}{d} & \bitbox{1}{e} & \bitbox{1}{f} & \bitbox{10}{} & \bitbox{16}{ExposureLength}
+          \end{leftwordgroup} \\
+	\begin{leftwordgroup}{8}
+           \bitbox{16}{FrameInterval} & \bitbox{16}{VsyncOffset}
+	\end{leftwordgroup} \\
+	\begin{leftwordgroup}{12}
+           \bitbox{8}{DutyCycle} & \bitbox[]{24}{}
+	\end{leftwordgroup} \\
+\end{bytefield}
+
+\begin{itemize}
+  \item {\bfseries ReportID} (8 bits): The USB Report ID for this report is 12.
+  \item {\bfseries CommandID} (16 bits): A sequence number that is then repeated in the LastCommandID field of the HID IN Report.
+  \item {\bfseries Pattern} (8 bits): The index of the pattern of high and low intensities that is currently set on the tracking LEDs.  Pattern 255 is reserved for all LEDs set high.  Patterns auto-increment after each exposure if the Autoincrement bit is set in the bitmask.  The Pattern starts at 0 on power on.
+  \item {\bfseries (a) Enable} (1 bit): This bit enables the tracking LED exposure and updating.  This currently defaults to on, but will default off in a later firmware revision.
+  \item {\bfseries (b) Autoincrement} (1 bit): With Autoincrement set, the Pattern is incremented after every exposure.  This defaults to on.
+  \item {\bfseries (c) UseCarrier} (1 bit): The tracking LEDs modulate at 85 kHz to allow for wireless synchronization when UseCarrier is enabled.  This defaults to on.
+  \item {\bfseries (d) SyncInput} (1 bit): With SyncInput enabled, LED exposure is triggered from a rising edge on GPIO1.  With SyncInput disabled, the LED exposure is triggered from an internal timer at FrameInterval.  This defaults to off.
+  \item {\bfseries (e) VsyncLock} (1 bit)(Disabled): If enabled, LED exposure is triggered on panel Vsync rather than from an internal timer or external trigger.  This defaults to off.
+  \item {\bfseries (f) CustomPattern} (1 bit): If enabled, the LED sequence will be the one loaded in using the CustomPattern report.  This defaults to off.
+  \item {\bfseries ExposureLength} (16 bits): This is the length of time the tracking LEDs are enabled for in microseconds.  The sync output also follows this length.  This number cannot be larger than the FrameInterval.  The minimum length is approximately 10 microseconds.
+  \item {\bfseries FrameInterval} (16 bits): When SyncInput and VsyncLock are false, the tracking LEDs are exposed on the interval set in FrameInterval in microseconds.
+  \item {\bfseries VsyncOffset} (16 bits)(Disabled): When VsyncLock is enabled, the exposure can be performed a fixed offset of VsyncOffset microseconds after the panel vsync.
+  \item {\bfseries DutyCycle} (8 bits): When UseCarrier is true, the duty cycle of the 85 kHz modulation can be increased or decreased.  The default value is 128, which results in a $50\%$ duty cycle. 
+\end{itemize}
+
+\newpage
+
+\subsection{Display}
+
+The 16 byte Display report has a ReportID of 13.  It configures the display panel. \\
+
+\begin{bytefield}[leftcurly=.,bitwidth=1.1em]{32}
+         \bitheader{0-31} \\
+	\begin{leftwordgroup}{0}
+           \bitbox{8}{ReportID = 13} & \bitbox{16}{CommandID} & \bitbox{8}{Brightness}
+	\end{leftwordgroup} \\
+	\begin{leftwordgroup}{4}
+           \bitbox{4}{a} & \bitbox{2}{b} & \bitbox{1}{c} & \bitbox{1}{d} & \bitbox{1}{e} & \bitbox{1}{f} & \bitbox{1}{g} & \bitbox{1}{h} &\bitbox{20}{}
+          \end{leftwordgroup} \\
+	\begin{leftwordgroup}{8}
+           \bitbox{16}{Persistence} & \bitbox{16}{LightingOffset}
+	\end{leftwordgroup} \\
+	\begin{leftwordgroup}{12}
+           \bitbox{16}{PixelSettle} & \bitbox{16}{TotalRows}
+	\end{leftwordgroup} \\
+\end{bytefield}
+
+\begin{itemize}
+  \item {\bfseries ReportID} (8 bits): The USB Report ID for this report is 13.
+  \item {\bfseries CommandID} (16 bits): A sequence number that is then repeated in the LastCommandID field of the HID IN Report.
+  \item {\bfseries Brightness} (8 bits): A relative brightness setting that is independent of pixel persistence.  The field only takes effect if HighBrightness is disabled. 
+  \item {\bfseries (a) ShutterType} (4 bits)(Read only): A read-only enum of the method in which the display is scanned and exposed.
+  \item {\bfseries (b) CurrentLimit} (2 bit): An enum of the current limiting mode in use.
+  \item {\bfseries (c) UseRolling} (1 bit): Switches between global shutter and rolling shutter update modes.  This defaults to true.
+  \item {\bfseries (d) ReverseRolling} (1 bit): Switches the polarity on the rolling shutter mode.  Reverse had the lighting of rows happen before the black period.  This defaults to true.
+  \item {\bfseries (e) HighBrightness} (1 bit)(Disabled): This enables a mode in which maximum brightness is used, at the possible expense of panel lifetime.  This defaults to false.
+  \item {\bfseries (f) SelfRefresh} (1 bit): This sets the panel to self refresh from the contents of its frame buffer.  This defaults to false.
+  \item {\bfseries (g) ReadPixel} (1 bit): This enables reading the top left pixel each frame.  This currently defaults to false, but will default to true in a later firmware revision.
+  \item {\bfseries (h) DirectPentile} (1 bit): This enables direct mapping of input data to panel sub pixel geometry, rather than using in-panel interpolation.
+  \item {\bfseries Persistence} (16 bits): This is the length of time in rows that the display is lit each frame.  This defaults to the full size of the display, meaning full persistence.
+  \item {\bfseries LightingOffset} (16 bits)(Disabled): This is the offset in rows from vsync that the panel is lit when using global shutter mode.  In rolling shutter, this has no effect.
+  \item {\bfseries PixelSettle} (16 bits)(Read only): This is the read-only time in microseconds that we estimate the pixel takes to settle to the value it is set to after it is lit.
+  \item {\bfseries TotalRows} (16 bits)(Read only): This is the read-only number of rows including active area and blanking used with Persistence and LightingOffset.
+\end{itemize}
+
+\newpage
+
+\subsection{MagCalibration}
+
+The 52 byte MagCalibration report has a ReportID of 14.  It contains the 3 by 4 matrix of parameters used to fit the magnetometer to a sphere.  The table is stored on the headset, but the firmware does not apply it to outgoing magnetometer data. \\
+
+\begin{bytefield}[leftcurly=.,bitwidth=1.1em]{32}
+         \bitheader{0-31} \\
+	\begin{leftwordgroup}{0}
+           \bitbox{8}{ReportID = 14} & \bitbox{16}{CommandID} & \bitbox{8}{Version}
+	\end{leftwordgroup} \\
+	\begin{leftwordgroup}{4}
+           \bitbox{32}{Calibration[0][0]}
+         \end{leftwordgroup} \\
+	\begin{leftwordgroup}{8}
+           \bitbox{32}{Calibration[0][1]}
+         \end{leftwordgroup} \\
+	\begin{leftwordgroup}{12}
+           \bitbox{32}{Calibration[0][2]}
+         \end{leftwordgroup} \\
+	\begin{leftwordgroup}{16}
+           \bitbox{32}{Calibration[0][3]}
+         \end{leftwordgroup} \\
+	\begin{leftwordgroup}{20}
+           \bitbox{32}{Calibration[1][0]}
+         \end{leftwordgroup} \\
+	\begin{leftwordgroup}{24}
+           \bitbox{32}{Calibration[1][1]}
+         \end{leftwordgroup} \\
+	\begin{leftwordgroup}{28}
+           \bitbox{32}{Calibration[1][2]}
+         \end{leftwordgroup} \\
+	\begin{leftwordgroup}{32}
+           \bitbox{32}{Calibration[1][3]}
+         \end{leftwordgroup} \\
+	\begin{leftwordgroup}{36}
+           \bitbox{32}{Calibration[2][0]}
+         \end{leftwordgroup} \\
+	\begin{leftwordgroup}{40}
+           \bitbox{32}{Calibration[2][1]}
+         \end{leftwordgroup} \\
+	\begin{leftwordgroup}{44}
+           \bitbox{32}{Calibration[2][2]}
+         \end{leftwordgroup} \\
+	\begin{leftwordgroup}{48}
+           \bitbox{32}{Calibration[2][3]}
+         \end{leftwordgroup} \\
+\end{bytefield}
+
+\begin{itemize}
+  \item {\bfseries ReportID} (8 bits): The USB Report ID for this report is 14.
+  \item {\bfseries CommandID} (16 bits): A sequence number that is then repeated in the LastCommandID field of the HID IN Report.
+  \item {\bfseries Version} (8 bits): The version of the calibration procedure used to generate the stored table. 
+  \item {\bfseries Calibration} (48 bytes): This is the 3 by 4 matrix used to fit magnetometer data to a sphere.  Each field is a 32 bit signed integer.  The specific value is dependent on the calibration procedure, indicated by Version.
+\end{itemize}
+
+\newpage
+
+\subsection{PositionCalibration}
+
+The 30 byte PositionCalibration report has a ReportID of 15.  It allows reading and storage of calibrated positions of each tracking LED as well as the inertial tracker.\\
+
+\begin{bytefield}[leftcurly=.,bitwidth=1.1em]{32}
+         \bitheader{0-31} \\
+	\begin{leftwordgroup}{0}
+           \bitbox{8}{ReportID = 15} & \bitbox{16}{CommandID} & \bitbox{8}{Version}
+	\end{leftwordgroup} \\
+	\begin{leftwordgroup}{4}
+           \bitbox{32}{Position[0]}
+          \end{leftwordgroup} \\
+	\begin{leftwordgroup}{8}
+           \bitbox{32}{Position[1]}
+          \end{leftwordgroup} \\
+	\begin{leftwordgroup}{12}
+           \bitbox{32}{Position[2]}
+          \end{leftwordgroup} \\
+	\begin{leftwordgroup}{16}
+           \bitbox{16}{Normal[0]} && \bitbox{16}{Normal[1]}
+          \end{leftwordgroup} \\
+	\begin{leftwordgroup}{20}
+           \bitbox{16}{Normal[2]} && \bitbox{16}{Rotation}
+          \end{leftwordgroup} \\
+	\begin{leftwordgroup}{24}
+           \bitbox{16}{PositionIndex} & \bitbox{16}{NumPositions}
+          \end{leftwordgroup} \\
+	\begin{leftwordgroup}{28}
+           \bitbox{16}{PositionType} & \bitbox[]{16}{}
+          \end{leftwordgroup} \\
+\end{bytefield}
+
+\begin{itemize}
+  \item {\bfseries ReportID} (8 bits): The USB Report ID for this report is 15.
+  \item {\bfseries CommandID} (16 bits): A sequence number that is then repeated in the LastCommandID field of the HID IN Report.
+  \item {\bfseries Version} (8 bits): The version of the calibration procedure used to generate the stored positions.  Note that setting the report with a Version value of 1 returns the Position values for the PositionIndex to the stored defaults.
+    \begin{description}
+      \item[0 -] None
+      \item[1 -] Hard-coded default positions
+      \item[2 -] Factory calibrated
+      \item[3 -] User calibrated
+    \end{description}
+  \item {\bfseries Position} (12 bytes): The X, Y, and Z axis position of the LED or inertial tracker.  This is a signed integer in units of micrometers.  The position is relative to the center of the emitter plane of the display at nominal focus.
+  \item {\bfseries Normal} (6 bytes): The X, Y, and Z axis normal of the LED or inertial tracker.  This is a signed integer in units of micrometers.  The Normal is relative to the Position.
+  \item {\bfseries Rotation} (16 bits): The rotation around the normal.  This is in units of $ 10\textsuperscript{-4}$ radians.
+  \item {\bfseries PositionIndex} (16 bits): This is the current position being read or written to.  This autoincrements on reads, and gets set to the written value on writes.
+  \item {\bfseries NumPositions} (16 bits)(Read only): This is the read-only number of items with positions stored.
+  \item {\bfseries PositionType} (16 bits)(Read only): The type of the item which has its position reported in the current report.  These are defined as:
+    \begin{description}
+      \item[0 -] Tracking LED
+      \item[1 -] Inertial sensor
+    \end{description}
+    When setting this report, the PositionType should match that read for the PositionIndex.
+\end{itemize}
+
+\newpage
+
+\subsection{CustomPattern}
+
+The 12 byte CustomPattern report has a ReportID of 16.  It allows reading of the default LED patterns as well as reading and setting of custom patterns.  Repeated reads of the report iterate through each LED, starting at 0 and wrapping at the final LED.  When the CustomPattern bit of the Tracking report is not set, reads on this report act upon the default LED pattern stored in the headset, and writes have no effect.  With the CustomPattern bit set, this report acts on a custom pattern array that erases when the headset is reset.\\
+
+\begin{bytefield}[leftcurly=.,bitwidth=1.1em]{32}
+         \bitheader{0-31} \\
+	\begin{leftwordgroup}{0}
+           \bitbox{8}{ReportID = 16} & \bitbox{16}{CommandID} & \bitbox{8}{SequenceLength}
+	\end{leftwordgroup} \\
+	\begin{leftwordgroup}{4}
+           \bitbox{32}{Sequence}
+          \end{leftwordgroup} \\
+	\begin{leftwordgroup}{8}
+           \bitbox{16}{LEDIndex} & \bitbox{16}{NumLEDs}
+	\end{leftwordgroup} \\
+\end{bytefield}
+
+\begin{itemize}
+  \item {\bfseries ReportID} (8 bits): The USB Report ID for this report is 16.
+  \item {\bfseries CommandID} (16 bits): A sequence number that is then repeated in the LastCommandID field of the HID IN Report.
+  \item {\bfseries SequenceLength} (8 bits): The length of the sequence of bits that each LED goes through.  Each state of the sequence is represented by two bits, allowing a maximum of 4 levels per sequence.  For DK2, only states 0, 1, and 3 are meaningful, for off, low, and high respectively.
+  \item {\bfseries Sequence} (32 bits): The sequence that the specific LED goes through.  The first $SequenceLength*2$ bits are used.  The sequence is in order of LSB to MSB.
+  \item {\bfseries LEDIndex} (16 bits): This is the current LED being read or written to.  This autoincrements on reads, and gets set to the written value on writes.
+  \item {\bfseries NumLEDs} (16 bits)(Read only): This is the read-only number of tracking LEDs which are actually present on the device.
+\end{itemize}
+
+\newpage
+
+\subsection{KeepAliveMux}
+
+The 6 byte KeepAliveMux report has a ReportID of 17.  It is used to specify both which IN Report is sent and the interval of sending.  The interval takes effect only if the UseCommandKeepAlive or UseMotionKeepAlive bits are set in the Config report.\\
+
+\begin{bytefield}[leftcurly=.,bitwidth=1.1em]{32}
+         \bitheader{0-31} \\
+	\begin{leftwordgroup}{0}
+           \bitbox{8}{ReportID = 17} & \bitbox{16}{CommandID} & \bitbox{8}{INReport}
+	\end{leftwordgroup} \\
+	\begin{leftwordgroup}{4}
+           \bitbox{16}{Interval} & \bitbox[]{16}{}
+          \end{leftwordgroup} \\
+\end{bytefield}
+
+\begin{itemize}
+  \item {\bfseries ReportID} (8 bits): The USB Report ID for this report is 17.
+  \item {\bfseries CommandID} (16 bits): A sequence number that is then repeated in the LastCommandID field of the HID IN Report.
+  \item {\bfseries INReport} (8 bits): The specified number is the INReport which will be repeatedly sent until the interval is passed.  For example, specifying 1 sends the DK1 IN Report, while specifying 11 sends the DK2 IN Report.  The default value for DK2 is 11.
+  \item {\bfseries Interval} (16 bits): The interval in milliseconds used as the threshold for UseCommandKeepAlive and UseMotionKeepAlive.  The default interval is 10000.
+\end{itemize}
+
+\newpage
+
+\subsection{Manufacturing}
+
+The 16 byte Manufacturing report has a ReportID of 18.  It is used to record and display the results of each stage of the production of the DK2 product that has USB access.\\
+
+\begin{bytefield}[leftcurly=.,bitwidth=1.1em]{32}
+         \bitheader{0-31} \\
+	\begin{leftwordgroup}{0}
+           \bitbox{8}{ReportID = 18} & \bitbox{16}{CommandID} & \bitbox{8}{NumStages}
+	\end{leftwordgroup} \\
+	\begin{leftwordgroup}{4}
+           \bitbox{8}{Stage} & \bitbox{8}{StageVersion} & \bitbox{16}{StageLocation}
+         \end{leftwordgroup} \\
+	\begin{leftwordgroup}{8}
+           \bitbox{32}{StageTime}
+         \end{leftwordgroup} \\
+	\begin{leftwordgroup}{12}
+           \bitbox{32}{Result}
+         \end{leftwordgroup} \\
+\end{bytefield}
+
+\begin{itemize}
+  \item {\bfseries ReportID} (8 bits): The USB Report ID for this report is 18.
+  \item {\bfseries CommandID} (16 bits): A sequence number that is then repeated in the LastCommandID field of the HID IN Report.
+  \item {\bfseries NumStages} (8 bits)(Read only): The number of stages of production being recorded on the product.
+  \item {\bfseries Stage} (8 bits): The specific stage number being recorded or read from.  This autoincrements on reads, and gets set to the written value on writes.
+  \item {\bfseries StageVersion} (8 bits): The version of the specific manufacturing test.
+  \item {\bfseries StageLocation} (16 bits): A bit mask representing the manufacturer, line, and machine this test was performed on.  See the DK2 Testware document for details on this.
+  \item {\bfseries StageTime} (32 bits): The UNIX time at which the stage was performed.
+  \item {\bfseries Result} (32 bits): The result of the stage.  See the DK2 Testware document for the details of what this means for each stage.
+\end{itemize}
+
+\newpage
+
+\subsection{UUID}
+
+The 23 byte UUID report has a ReportID of 19.  It is used internally for manufacturing purposes, when the USB serial number is set to a default number.  Outside of manufacturing, the number is identical to the USB serial number.  Setting this report switches the USB serial number to the value read from this report.  The value being set is ignored.\\
+
+\begin{bytefield}[leftcurly=.,bitwidth=1.1em]{32}
+         \bitheader{0-31} \\
+	\begin{leftwordgroup}{0}
+           \bitbox{8}{ReportID = 19} & \bitbox{16}{CommandID} & \bitbox{8}{UUID[0]} 
+	\end{leftwordgroup} \\
+	\begin{leftwordgroup}{4}
+           \bitbox{32}{UUID[1:5]}
+	\end{leftwordgroup} \\
+	\begin{leftwordgroup}{8}
+           \bitbox{32}{UUID[5:9]}
+	\end{leftwordgroup} \\
+	\begin{leftwordgroup}{12}
+           \bitbox{32}{UUID[9:13]}
+	\end{leftwordgroup} \\
+	\begin{leftwordgroup}{16}
+           \bitbox{32}{UUID[13:17]}
+	\end{leftwordgroup} \\
+	\begin{leftwordgroup}{20}
+           \bitbox{24}{UUID[17:20]} & \bitbox[]{8}{}
+	\end{leftwordgroup} \\
+\end{bytefield}
+
+\begin{itemize}
+  \item {\bfseries ReportID} (8 bits): The USB Report ID for this report is 19.
+  \item {\bfseries CommandID} (16 bits): A sequence number that is then repeated in the LastCommandID field of the HID IN Report.
+  \item {\bfseries UUID} (20 bytes)(Read only):  The unique ID of the device.
+\end{itemize}
+
+\newpage
+
+\subsection{Temperature}
+
+The 24 byte Temperature report has a ReportID of 20.  It is used to store gyroscope zero rate offsets across different temperatures.  The offsets are stored for certain target temperature Bins, with multiple Samples of offset data stored per temperature.  When reading the report, subsequent reads of the report go sequentially through each Sample in NumSamples for each Bin in NumBins.  The headset only stores the offsets, and does not create or modify them directly.\\
+
+\begin{bytefield}[leftcurly=.,bitwidth=1.1em]{32}
+         \bitheader{0-31} \\
+	\begin{leftwordgroup}{0}
+           \bitbox{8}{ReportID = 20} & \bitbox{16}{CommandID} & \bitbox{8}{Version} 
+	\end{leftwordgroup} \\
+	\begin{leftwordgroup}{4}
+           \bitbox{8}{NumBins} & \bitbox{8}{Bin} & \bitbox{8}{NumSamples} & \bitbox{8}{Sample}
+	\end{leftwordgroup} \\
+	\begin{leftwordgroup}{8}
+           \bitbox{16}{TargetTemperature} & \bitbox{16}{ActualTemperature}
+	\end{leftwordgroup} \\
+	\begin{leftwordgroup}{12}
+           \bitbox{32}{Time}
+	\end{leftwordgroup} \\
+	\begin{leftwordgroup}{16}
+           \wordbox[lrt]{1}{Offset}
+	\end{leftwordgroup} \\
+         \skippedwords \\
+         \wordbox[lrb]{1}{} \\
+\end{bytefield}
+
+\begin{itemize}
+  \item {\bfseries ReportID} (8 bits): The USB Report ID for this report is 20.
+  \item {\bfseries CommandID} (16 bits): A sequence number that is then repeated in the LastCommandID field of the HID IN Report.
+  \item {\bfseries Version} (8 bits):  The version of temperature calibration being performed.
+  \item {\bfseries NumBins} (8 bits)(Read only): The number of temperature bins being stored.
+  \item {\bfseries Bin} (8 bits): The current index of temperature bin the samples are for.  This autoincrements on reading all of the Samples in the Bin, and gets set to the written value on writes.
+  \item {\bfseries NumSamples} (8 bits)(Read only): The number of samples being stored per temperature bin.
+  \item {\bfseries Sample} (8 bits): The current index of temperature offset sample.  This autoincrements on reads, and gets set to the written value on writes.
+  \item {\bfseries TargetTemperature} (16 bits)(Read only): The target temperature in centidegrees Celsius for the current Level.
+  \item {\bfseries ActualTemperature} (16 bits): The actual temperature in centidegrees Celsius of the current Bin.
+  \item {\bfseries Time} (32 bits): The UNIX time that the current Sample was generated at.
+  \item {\bfseries Offset} (64 bits): The packed sample format with 21 bits per axis used for the IN Report, with each value in units of $\frac{\theta}{s}\cdot 10\textsuperscript{-4}$ radians, representing the estimated zero-rate gyroscope offset for the ActualTemperature.
+\end{itemize}
+
+\newpage
+
+\subsection{GyroOffset}
+
+The 18 byte Temperature report has a ReportID of 21.  It is used to fetch the headset's most recent estimate of gyro zero-rate offset error.  Note that if the headset fails to complete zero rate offset calculation, there will not be valid data in this report, indicated by a Version field value of 0.\\
+
+\begin{bytefield}[leftcurly=.,bitwidth=1.1em]{32}
+         \bitheader{0-31} \\
+	\begin{leftwordgroup}{0}
+           \bitbox{8}{ReportID = 21} & \bitbox{16}{CommandID} & \bitbox{8}{Version} 
+	\end{leftwordgroup} \\
+	\begin{leftwordgroup}{4}
+           \wordbox[lrt]{1}{Offset}
+	\end{leftwordgroup} \\
+         \skippedwords \\
+         \wordbox[lrb]{1}{} \\
+	\begin{leftwordgroup}{12}
+           \bitbox{32}{Timestamp}
+        	\end{leftwordgroup} \\
+	\begin{leftwordgroup}{16}
+           \bitbox{16}{Temperature} & \bitbox[]{16}{}
+	\end{leftwordgroup} \\
+\end{bytefield}
+
+\begin{itemize}
+  \item {\bfseries ReportID} (8 bits): The USB Report ID for this report is 21.
+  \item {\bfseries CommandID} (16 bits): A sequence number that is then repeated in the LastCommandID field of the HID IN Report.
+  \item {\bfseries Version} (8 bits):  The version of offset calculation being performed.
+    \begin{description}
+      \item[0 -] No offset calculated
+      \item[1 -] Running average terminated by motion
+      \item[2 -] Running average terminated by timeout
+    \end{description}
+  \item {\bfseries Offset} (64 bits): The packed sample format with 21 bits per axis used for the IN Report, with each value in units of $\frac{\theta}{s}\cdot 10\textsuperscript{-4}$ radians, representing the estimated zero-rate gyroscope offset.
+  \item {\bfseries Timestamp} (32 bits): A microsecond timestamp of the calculation of the offset.  This is recorded on the same clock as the SampleTimestamp in the IN Report.
+  \item {\bfseries Temperature} (16 bits): The temperature the offset was calculated at.
+\end{itemize}
+
+\newpage
+
+\subsection{LensDistortion}
+
+The 64 byte LensDistortion report has a ReportID of 22.  It defines parameters used by LibOVR to correct lens distortion.  Multiple reports of the same or different versions or eye reliefs may be available, defined by NumDistortions.  The report defaults to factory data, but each DistortionIndex may be overwritten with new data.\\
+
+\begin{bytefield}[leftcurly=.,bitwidth=1.1em]{32}
+         \bitheader{0-31} \\
+	\begin{leftwordgroup}{0}
+           \bitbox{8}{ReportID = 22} & \bitbox{16}{CommandID} & \bitbox{8}{NumDistortions} 
+	\end{leftwordgroup} \\
+	\begin{leftwordgroup}{4}
+           \bitbox{8}{DistortionIndex} & \bitbox{8}{Bitmask} & \bitbox{16}{LensType}
+	\end{leftwordgroup} \\
+	\begin{leftwordgroup}{8}
+           \bitbox{16}{Version} & \bitbox{16}{EyeRelief}
+	\end{leftwordgroup} \\
+	\begin{leftwordgroup}{12}
+           \bitbox{16}{KCoefficients[0]} & \bitbox{16}{KCoefficients[1]}
+	\end{leftwordgroup} \\
+	\begin{leftwordgroup}{16}
+           \bitbox{16}{KCoefficients[2]} & \bitbox{16}{KCoefficients[3]}
+	\end{leftwordgroup} \\
+	\begin{leftwordgroup}{20}
+           \bitbox{16}{KCoefficients[4]} & \bitbox{16}{KCoefficients[5]}
+	\end{leftwordgroup} \\
+	\begin{leftwordgroup}{24}
+           \bitbox{16}{KCoefficients[6]} & \bitbox{16}{KCoefficients[7]}
+	\end{leftwordgroup} \\
+	\begin{leftwordgroup}{28}
+           \bitbox{16}{KCoefficients[8]} & \bitbox{16}{KCoefficients[9]}
+	\end{leftwordgroup} \\
+	\begin{leftwordgroup}{32}
+           \bitbox{16}{KCoefficients[10]} & \bitbox{16}{MaxR}
+	\end{leftwordgroup} \\
+	\begin{leftwordgroup}{36}
+           \bitbox{16}{MetersPerTanAngleAtCenter} & \bitbox{16}{ChromaticAberration[0]}
+	\end{leftwordgroup} \\
+	\begin{leftwordgroup}{40}
+           \bitbox{16}{ChromaticAberration[1]} & \bitbox{16}{ChromaticAberration[2]}
+	\end{leftwordgroup} \\
+	\begin{leftwordgroup}{44}
+           \bitbox{16}{ChromaticAberration[3]} & \bitbox[lrt]{16}{}
+	\end{leftwordgroup} \\
+	\begin{leftwordgroup}{48}
+           \wordbox[lr]{1}{Unused}
+	\end{leftwordgroup} \\
+         \skippedwords \\
+         \wordbox[lrb]{1}{} \\
+\end{bytefield}
+
+\begin{itemize}
+  \item {\bfseries ReportID} (8 bits): The USB Report ID for this report is 22.
+  \item {\bfseries CommandID} (16 bits): A sequence number that is then repeated in the LastCommandID field of the HID IN Report.
+  \item {\bfseries NumDistortions} (8 bits)(Read only):  The number of lens distortions being stored.
+  \item {\bfseries DistortionsIndex} (8 bits):  The current index of lens distortion.  This autoincrements on reads and gets set to the written value on writes.
+  \item {\bfseries Bitmask} (8 bits):  A current unused bitmask.
+  \item {\bfseries LensType} (16 bits):  The type of the lens used in the headset.  These are enumerated in LibOVR.
+  \item {\bfseries Version} (16 bits):  The version of lens distortion specified in the report.  The fields after this one are dependent on the specified Version.
+    \begin{description}
+      \item[0 -] No lens distortion stored. The remaining report is empty.
+      \item[1 -] LCSV\_CatmullRom10Version1. The fields are defined as below.
+    \end{description}
+  \item {\bfseries EyeRelief} (16 bits):  The eye relief the distortion is designed for.  This is in units of micrometers measured from the front surface of the lens.
+  \item {\bfseries KCoefficients} (11 fields of 16 bits): Catmull-Rom distortion coefficients.  The units are defined in LibOVR.
+  \item {\bfseries MaxR} (16 bits): Defined in LibOVR.
+  \item {\bfseries MetersPerTanAngleAtCenter} (16 bits): Defined in LibOVR.
+  \item {\bfseries ChromaticAberration} (4 fields of 16 bits): Defined in LibOVR.
+  \item {\bfseries Unused} (14 bytes): Unused by LCSV\_CatmullRom10Version1.
+\end{itemize}
+
+\newpage
+
+\section{EDID}
+
+The EDID 1.3 is read over the HDMI interface by the video host.
+
+\begin{itemize}
+  \item {\bfseries Manufacturer ID:} {\em OVR}
+  \item {\bfseries Product ID:} {\em 0x0003}
+  \item {\bfseries Product String:} {\em Rift DK2}
+  \item {\bfseries Serial String:} {\em First 13 bytes of the device UUID}
+\end{itemize}
+
+\end{document}

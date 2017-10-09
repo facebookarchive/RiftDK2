@@ -1,0 +1,17 @@
+---------------------------------------------------------------------------
+NCDrill File Report For: LEDFLX.PcbDoc   11/19/2013  4:15:57 PM
+---------------------------------------------------------------------------
+
+Layer Pair : Top Layer to Bottom Layer
+ASCII RoundHoles File : LEDFLX-RoundHoles.TXT
+ASCII SlotHoles File : LEDFLX-SlotHoles.TXT
+
+Tool         Hole Size           Hole Type     Hole Count Plated       Tool Travel
+---------------------------------------------------------------------------
+T1        10mil (0.254mm)          Round          221              103.03 Inch (2617.04 mm)
+T2        98.43mil (2.50012mm)     Round          40               60.66 Inch (1540.83 mm)
+T3        98.43mil (2.50012mm)     Slot           40               342.47 Inch (8698.72 mm)
+---------------------------------------------------------------------------
+Totals                                            301              506.17 Inch (12856.59 mm)
+
+Total Processing Time (hh:mm:ss) : 00:00:00

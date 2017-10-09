@@ -1,0 +1,84 @@
+*************************************************************
+FileName = CBL003.PcbDoc
+ODB++ directory structure
+*************************************************************
+Generated File : P:\depot\Hardware\PCB\Projects\Cable\CBL003\trunk\generated\ODB\odb\matrix\matrix
+
+Generated File : P:\depot\Hardware\PCB\Projects\Cable\CBL003\trunk\generated\ODB\odb\steps\pcb\profile
+
+Generated File : P:\depot\Hardware\PCB\Projects\Cable\CBL003\trunk\generated\ODB\odb\steps\pcb\stephdr
+
+Generated File : P:\depot\Hardware\PCB\Projects\Cable\CBL003\trunk\generated\ODB\odb\steps\pcb\attrlist
+
+Generated File : P:\depot\Hardware\PCB\Projects\Cable\CBL003\trunk\generated\ODB\odb\steps\pcb\layers\topoverlay\features
+
+Generated File : P:\depot\Hardware\PCB\Projects\Cable\CBL003\trunk\generated\ODB\odb\steps\pcb\layers\topoverlay\attrlist
+
+Generated File : P:\depot\Hardware\PCB\Projects\Cable\CBL003\trunk\generated\ODB\odb\steps\pcb\layers\toppaste\features
+
+Generated File : P:\depot\Hardware\PCB\Projects\Cable\CBL003\trunk\generated\ODB\odb\steps\pcb\layers\toppaste\attrlist
+
+Generated File : P:\depot\Hardware\PCB\Projects\Cable\CBL003\trunk\generated\ODB\odb\steps\pcb\layers\topsolder\features
+
+Generated File : P:\depot\Hardware\PCB\Projects\Cable\CBL003\trunk\generated\ODB\odb\steps\pcb\layers\topsolder\attrlist
+
+Generated File : P:\depot\Hardware\PCB\Projects\Cable\CBL003\trunk\generated\ODB\odb\steps\pcb\layers\top\features
+
+Generated File : P:\depot\Hardware\PCB\Projects\Cable\CBL003\trunk\generated\ODB\odb\steps\pcb\layers\top\attrlist
+
+Generated File : P:\depot\Hardware\PCB\Projects\Cable\CBL003\trunk\generated\ODB\odb\steps\pcb\layers\bottom\features
+
+Generated File : P:\depot\Hardware\PCB\Projects\Cable\CBL003\trunk\generated\ODB\odb\steps\pcb\layers\bottom\attrlist
+
+Generated File : P:\depot\Hardware\PCB\Projects\Cable\CBL003\trunk\generated\ODB\odb\steps\pcb\layers\bottomsolder\features
+
+Generated File : P:\depot\Hardware\PCB\Projects\Cable\CBL003\trunk\generated\ODB\odb\steps\pcb\layers\bottomsolder\attrlist
+
+Generated File : P:\depot\Hardware\PCB\Projects\Cable\CBL003\trunk\generated\ODB\odb\steps\pcb\layers\bottompaste\features
+
+Generated File : P:\depot\Hardware\PCB\Projects\Cable\CBL003\trunk\generated\ODB\odb\steps\pcb\layers\bottompaste\attrlist
+
+Generated File : P:\depot\Hardware\PCB\Projects\Cable\CBL003\trunk\generated\ODB\odb\steps\pcb\layers\bottomoverlay\features
+
+Generated File : P:\depot\Hardware\PCB\Projects\Cable\CBL003\trunk\generated\ODB\odb\steps\pcb\layers\bottomoverlay\attrlist
+
+Generated File : P:\depot\Hardware\PCB\Projects\Cable\CBL003\trunk\generated\ODB\odb\steps\pcb\layers\drill\features
+
+Generated File : P:\depot\Hardware\PCB\Projects\Cable\CBL003\trunk\generated\ODB\odb\steps\pcb\layers\drill\attrlist
+
+Generated File : P:\depot\Hardware\PCB\Projects\Cable\CBL003\trunk\generated\ODB\odb\steps\pcb\layers\drill\tools
+
+Generated File : P:\depot\Hardware\PCB\Projects\Cable\CBL003\trunk\generated\ODB\odb\steps\pcb\layers\keepout\features
+
+Generated File : P:\depot\Hardware\PCB\Projects\Cable\CBL003\trunk\generated\ODB\odb\steps\pcb\layers\keepout\attrlist
+
+Generated File : P:\depot\Hardware\PCB\Projects\Cable\CBL003\trunk\generated\ODB\odb\steps\pcb\layers\mechanical1\features
+
+Generated File : P:\depot\Hardware\PCB\Projects\Cable\CBL003\trunk\generated\ODB\odb\steps\pcb\layers\mechanical1\attrlist
+
+Generated File : P:\depot\Hardware\PCB\Projects\Cable\CBL003\trunk\generated\ODB\odb\steps\pcb\layers\mechanical13\features
+
+Generated File : P:\depot\Hardware\PCB\Projects\Cable\CBL003\trunk\generated\ODB\odb\steps\pcb\layers\mechanical13\attrlist
+
+Generated File : P:\depot\Hardware\PCB\Projects\Cable\CBL003\trunk\generated\ODB\odb\steps\pcb\layers\mechanical14\features
+
+Generated File : P:\depot\Hardware\PCB\Projects\Cable\CBL003\trunk\generated\ODB\odb\steps\pcb\layers\mechanical14\attrlist
+
+Generated File : P:\depot\Hardware\PCB\Projects\Cable\CBL003\trunk\generated\ODB\odb\steps\pcb\layers\mechanical15\features
+
+Generated File : P:\depot\Hardware\PCB\Projects\Cable\CBL003\trunk\generated\ODB\odb\steps\pcb\layers\mechanical15\attrlist
+
+Generated File : P:\depot\Hardware\PCB\Projects\Cable\CBL003\trunk\generated\ODB\odb\steps\pcb\layers\mechanical17\features
+
+Generated File : P:\depot\Hardware\PCB\Projects\Cable\CBL003\trunk\generated\ODB\odb\steps\pcb\layers\mechanical17\attrlist
+
+Generated File : P:\depot\Hardware\PCB\Projects\Cable\CBL003\trunk\generated\ODB\odb\steps\pcb\layers\comp_+_top\features
+
+Generated File : P:\depot\Hardware\PCB\Projects\Cable\CBL003\trunk\generated\ODB\odb\steps\pcb\layers\comp_+_top\components
+
+Generated File : P:\depot\Hardware\PCB\Projects\Cable\CBL003\trunk\generated\ODB\odb\steps\pcb\layers\comp_+_bot\features
+
+Generated File : P:\depot\Hardware\PCB\Projects\Cable\CBL003\trunk\generated\ODB\odb\steps\pcb\layers\comp_+_bot\components
+
+Generated File : P:\depot\Hardware\PCB\Projects\Cable\CBL003\trunk\generated\ODB\odb\steps\pcb\eda\data
+

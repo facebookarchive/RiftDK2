@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<workspace>
+  <project>
+    <path>$WS_DIR$\DK2.ewp</path>
+  </project>
+  <project>
+    <path>$WS_DIR$\..\bootloader\prj\DK2Bootloader.ewp</path>
+  </project>
+  <batchBuild>
+    <batchDefinition>
+      <name>All</name>
+      <member>
+        <project>DK2</project>
+        <configuration>REV3</configuration>
+      </member>
+      <member>
+        <project>DK2</project>
+        <configuration>REV3_3</configuration>
+      </member>
+      <member>
+        <project>DK2</project>
+        <configuration>REV3-DEBUG</configuration>
+      </member>
+      <member>
+        <project>DK2</project>
+        <configuration>REV3_3-DEBUG</configuration>
+      </member>
+      <member>
+        <project>DK2Bootloader</project>
+        <configuration>REV3</configuration>
+      </member>
+      <member>
+        <project>DK2Bootloader</project>
+        <configuration>REV3_3</configuration>
+      </member>
+    </batchDefinition>
+    <batchDefinition>
+      <name>Release</name>
+      <member>
+        <project>DK2</project>
+        <configuration>REV3</configuration>
+      </member>
+      <member>
+        <project>DK2</project>
+        <configuration>REV3_3</configuration>
+      </member>
+      <member>
+        <project>DK2Bootloader</project>
+        <configuration>REV3</configuration>
+      </member>
+      <member>
+        <project>DK2Bootloader</project>
+        <configuration>REV3_3</configuration>
+      </member>
+    </batchDefinition>
+  </batchBuild>
+</workspace>
+
+

@@ -1,0 +1,20 @@
+---------------------------------------------------------------------------
+NCDrill File Report For: CBL003.PcbDoc   7/6/2014  3:02:03 AM
+---------------------------------------------------------------------------
+
+Layer Pair : Top Layer to Bottom Layer
+ASCII RoundHoles File : CBL003-RoundHoles.TXT
+ASCII SlotHoles File : CBL003-SlotHoles.TXT
+
+Tool         Hole Size           Hole Type     Hole Count Plated       Tool Travel
+---------------------------------------------------------------------------
+T1        10mil (0.254mm)          Round          28               4.29 Inch (108.98 mm)
+T2        23.62mil (0.59995mm)     Slot           3                283.79 Inch (7208.33 mm)
+T3        25mil (0.635mm)          Round          4                0.79 Inch (20.04 mm)
+T4        43.31mil (1.10007mm)     Round          3                0.46 Inch (11.61 mm)
+T5        47.24mil (1.1999mm)      Round          2         NPTH   0.85 Inch (21.50 mm)
+T6        62.99mil (1.59995mm)     Round          2         NPTH   0.20 Inch (5.00 mm)
+---------------------------------------------------------------------------
+Totals                                            42               290.37 Inch (7375.46 mm)
+
+Total Processing Time (hh:mm:ss) : 00:00:00

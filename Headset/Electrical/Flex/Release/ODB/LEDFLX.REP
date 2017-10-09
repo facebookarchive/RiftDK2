@@ -1,0 +1,120 @@
+*************************************************************
+FileName = LEDFLX.PcbDoc
+ODB++ directory structure
+*************************************************************
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\matrix\matrix
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\steps\pcb\profile
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\steps\pcb\stephdr
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\steps\pcb\attrlist
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\steps\pcb\layers\topoverlay\features
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\steps\pcb\layers\topoverlay\attrlist
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\steps\pcb\layers\toppaste\features
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\steps\pcb\layers\toppaste\attrlist
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\steps\pcb\layers\topsolder\features
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\steps\pcb\layers\topsolder\attrlist
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\steps\pcb\layers\top\features
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\steps\pcb\layers\top\attrlist
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\steps\pcb\layers\bottom\features
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\steps\pcb\layers\bottom\attrlist
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\steps\pcb\layers\bottomsolder\features
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\steps\pcb\layers\bottomsolder\attrlist
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\steps\pcb\layers\bottompaste\features
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\steps\pcb\layers\bottompaste\attrlist
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\steps\pcb\layers\bottomoverlay\features
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\steps\pcb\layers\bottomoverlay\attrlist
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\steps\pcb\layers\drill\features
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\steps\pcb\layers\drill\attrlist
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\steps\pcb\layers\drill\tools
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\steps\pcb\layers\keepout\features
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\steps\pcb\layers\keepout\attrlist
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\steps\pcb\layers\mechanical1\features
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\steps\pcb\layers\mechanical1\attrlist
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\steps\pcb\layers\mechanical13\features
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\steps\pcb\layers\mechanical13\attrlist
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\steps\pcb\layers\mechanical15\features
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\steps\pcb\layers\mechanical15\attrlist
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\steps\pcb\layers\comp_+_bot\features
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\steps\pcb\layers\comp_+_bot\components
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\steps\pcb\eda\data
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\symbols\rect82.992x122.362xr12.4488_2\features
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\symbols\rect82.992x122.362xr12.4488_95\features
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\symbols\rect82.992x122.362xr12.4488_136\features
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\symbols\rect82.992x122.362xr12.4488_224\features
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\symbols\rect82.992x122.362xr12.4488_265\features
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\symbols\rect82.992x122.362xr12.4488_358\features
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\symbols\rect82.992x122.362xr12.4488_182\features
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\symbols\rect82.992x122.362xr12.4488_275\features
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\symbols\rect82.992x122.362xr12.4488_314\features
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\symbols\rect82.992x122.362xr12.4488_44\features
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\symbols\rect82.992x122.362xr12.4488_85\features
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\symbols\rect82.992x122.362xr12.4488_178\features
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\symbols\rect62.992x102.362xr2.4488_2\features
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\symbols\rect62.992x102.362xr2.4488_95\features
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\symbols\rect62.992x102.362xr2.4488_136\features
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\symbols\rect62.992x102.362xr2.4488_224\features
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\symbols\rect62.992x102.362xr2.4488_265\features
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\symbols\rect62.992x102.362xr2.4488_358\features
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\symbols\rect62.992x102.362xr2.4488_182\features
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\symbols\rect62.992x102.362xr2.4488_275\features
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\symbols\rect62.992x102.362xr2.4488_314\features
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\symbols\rect62.992x102.362xr2.4488_44\features
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\symbols\rect62.992x102.362xr2.4488_85\features
+
+Generated File : C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\generated\ODB\odb\symbols\rect62.992x102.362xr2.4488_178\features
+

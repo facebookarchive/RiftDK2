@@ -1,0 +1,238 @@
+*************************************************************
+FileName = CBL003.GBR
+AutoAperture = True
+*************************************************************
+Generating : Top Layer
+      File : CBL003.GTL
+
+    Adding Layer      : Top Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D10
+    D11
+    D12
+    D13
+    D14
+    D15
+    D16
+    D17
+    D18
+    D19
+    D20
+    D21
+    D22
+    D23
+    D24
+    D25
+    D26
+    D27
+    D28
+    D29
+    D30
+    D31
+    D32
+    D33
+    D34
+    D35
+    D36
+    D37
+    D38
+    D39
+    D40
+    D41
+    D42
+    D43
+    D44
+    D45
+*************************************************************
+
+*************************************************************
+Generating : Bottom Layer
+      File : CBL003.GBL
+
+    Adding Layer      : Bottom Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D28
+    D29
+    D30
+    D31
+    D34
+    D36
+    D40
+    D41
+    D42
+    D43
+    D44
+    D45
+    D46
+*************************************************************
+
+*************************************************************
+Generating : Top Overlay
+      File : CBL003.GTO
+
+    Adding Layer      : Top Overlay
+
+
+Used DCodes :
+    D30
+    D32
+    D35
+    D36
+    D47
+    D48
+*************************************************************
+
+*************************************************************
+Generating : Top Paste
+      File : CBL003.GTP
+
+    Adding Layer      : Top Paste
+
+    Adding Layer      : Top Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D12
+    D13
+    D14
+    D15
+    D16
+    D17
+    D18
+    D19
+    D20
+    D24
+    D25
+    D38
+    D49
+    D50
+    D51
+    D52
+    D53
+    D54
+*************************************************************
+
+*************************************************************
+Generating : Top Solder
+      File : CBL003.GTS
+
+    Adding Layer      : Top Solder
+
+    Adding Layer      : Top Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D30
+    D39
+    D41
+    D42
+    D43
+    D55
+    D56
+    D57
+    D58
+    D59
+    D60
+    D61
+    D62
+    D63
+    D64
+    D65
+    D66
+    D67
+    D68
+    D69
+    D70
+    D71
+    D72
+    D73
+    D74
+    D75
+    D76
+    D77
+    D78
+*************************************************************
+
+*************************************************************
+Generating : Bottom Solder
+      File : CBL003.GBS
+
+    Adding Layer      : Bottom Solder
+
+    Adding Layer      : Bottom Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D30
+    D41
+    D42
+    D43
+    D74
+    D75
+    D76
+    D77
+    D78
+    D79
+*************************************************************
+
+*************************************************************
+Generating : Bottom Paste
+      File : CBL003.GBP
+
+    Adding Layer      : Bottom Paste
+
+    Adding Layer      : Bottom Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+*************************************************************
+
+*************************************************************
+Generating : Bottom Overlay
+      File : CBL003.GBO
+
+    Adding Layer      : Bottom Overlay
+
+
+Used DCodes :
+    D36
+*************************************************************
+
+*************************************************************
+Generating : Mechanical 1
+      File : CBL003.GM1
+
+    Adding Layer      : Mechanical 1
+
+
+Used DCodes :
+    D80
+*************************************************************
+
+*************************************************************
+Generating : Mechanical 15
+      File : CBL003.GM15
+
+    Adding Layer      : Mechanical 15
+
+
+Used DCodes :
+    D35
+*************************************************************
+

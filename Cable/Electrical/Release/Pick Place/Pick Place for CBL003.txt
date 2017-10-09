@@ -1,0 +1,31 @@
+Designator Footprint               Mid X         Mid Y         Ref X         Ref Y         Pad X         Pad Y TB      Rotation Comment        
+
+R9         RESISTOR_0402          357mil        583mil        357mil        583mil        357mil        563mil  T         90.00 .designator    
+R10        RESISTOR_0402          462mil        590mil        462mil        590mil        482mil        590mil  T        180.00 .designator    
+R8         RESISTOR_0402          530mil        673mil        530mil        673mil        530mil        693mil  T        270.00 .designator    
+C3         CAP_CERAMIC_0603        295mil    115.075mil        295mil    115.075mil        270mil    115.075mil  T        360.00 .designator    
+C2         CAP_CERAMIC_0805        263mil        591mil        263mil        591mil    298.433mil        591mil  T        180.00 .designator    
+U2         LLGA12-NCP374          646mil    601.803mil        646mil        602mil    596.787mil    524.835mil  T         90.00 .designator    
+U1         DFN200X200X050-6        461mil        515mil        461mil        515mil    486.591mil    551.024mil  T        270.00 .designator    
+R7         RESISTOR_0402          680mil        731mil        680mil        731mil        700mil        731mil  T        180.00 .designator    
+R6         RESISTOR_0402          530mil        608mil        530mil        608mil        530mil        628mil  T        270.00 .designator    
+R5         RESISTOR_0402          530mil        545mil        530mil        545mil        530mil        525mil  T         90.00 .designator    
+R4         RESISTOR_0402          387mil        652mil        387mil        652mil        387mil        672mil  T        270.00 .designator    
+R3         RESISTOR_0402          518mil        798mil        518mil        798mil        498mil        798mil  T        360.00 .designator    
+R2         RESISTOR_0402          518mil        742mil        518mil        742mil        498mil        742mil  T        360.00 .designator    
+R1         RESISTOR_0402          451mil        733mil        451mil        733mil        431mil        733mil  T        360.00 .designator    
+Q2         SOT363                 456mil        659mil        456mil        659mil    430.409mil    621.598mil  T         90.00 .designator    
+Q1         SOT363                 597mil        765mil        597mil        765mil    622.591mil    802.402mil  T        270.00 .designator    
+J4         KLDX-0202           624.52mil    275.047mil        532mil        153mil        532mil    397.094mil  T         90.00 .designator    
+J3         CUI_SJ2509N        563.496mil    991.095mil        532mil       1247mil        532mil   1109.205mil  T        180.00 .designator    
+C1         CAP_CERAMIC_0603        591mil        490mil        591mil        490mil        566mil        490mil  T        360.00 .designator    
+C4         CAP_CERAMIC_0402        377mil        515mil        377mil        515mil        377mil        535mil  T        270.00 .designator    
+D1         SOD882                 673mil        782mil        673mil        782mil        673mil    795.779mil  T        270.00 .designator    
+C5         CAP_CERAMIC_0402        396mil        583mil        396mil        583mil        396mil        603mil  T        270.00 .designator    
+R11        RESISTOR_0402          673mil        482mil        673mil        482mil        693mil        482mil  T        180.00 .designator    
+C6         CAP_CERAMIC_1206        268mil        662mil        268mil        662mil    327.055mil        662mil  T        180.00 .designator    
+D2         LLP1006-2L             233mil        346mil        233mil        346mil    245.795mil        346mil  T        180.00 .designator    
+D3         LLP1006-2L             281mil        722mil        281mil        722mil    293.795mil        722mil  T        180.00 .designator    
+Q3         DFN2020-6              295mil    186.065mil        295mil    186.075mil    269.409mil     150.13mil  T        360.00 .designator    
+R12        RESISTOR_0402          300mil     74.075mil        300mil     74.075mil        280mil     74.075mil  T        360.00 .designator    
+

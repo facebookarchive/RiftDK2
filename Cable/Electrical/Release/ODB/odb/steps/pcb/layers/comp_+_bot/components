@@ -1,0 +1,50 @@
+#
+#Component attribute names
+#
+@0 .comp_mount_type
+@1 .comp_height
+
+# CMP 0
+CMP 13 0.431 0.707 180 N TP11 .designator ;0=1,1=0.0000
+TOP 0 0.431 0.707 90 N 3 13 TP11-1
+#
+# CMP 1
+CMP 13 0.62 0.655 180 N TP10 .designator ;0=1,1=0.0000
+TOP 0 0.62 0.655 90 N 3 9 TP10-1
+#
+# CMP 2
+CMP 13 0.584 0.514 270 N TP9 .designator ;0=1,1=0.0000
+TOP 0 0.584 0.514 0 N 10 0 TP9-1
+#
+# CMP 3
+CMP 13 0.306 0.535 270 N TP8 .designator ;0=1,1=0.0000
+TOP 0 0.306 0.535 0 N 17 0 TP8-1
+#
+# CMP 4
+CMP 13 0.671 0.564 270 N TP1 .designator ;0=1,1=0.0000
+TOP 0 0.671 0.564 0 N 14 4 TP1-1
+#
+# CMP 5
+CMP 13 0.694 0.964 270 N TP2 .designator ;0=1,1=0.0000
+TOP 0 0.694 0.964 0 N 13 0 TP2-1
+#
+# CMP 6
+CMP 13 0.674 0.397 270 N TP3 .designator ;0=1,1=0.0000
+TOP 0 0.674 0.397 0 N 4 0 TP3-1
+#
+# CMP 7
+CMP 13 0.484 0.793 270 N TP4 .designator ;0=1,1=0.0000
+TOP 0 0.484 0.793 0 N 7 3 TP4-1
+#
+# CMP 8
+CMP 13 0.532 0.238 270 N TP5 .designator ;0=1,1=0.0000
+TOP 0 0.532 0.238 0 N 3 21 TP5-1
+#
+# CMP 9
+CMP 13 0.58 0.965 270 N TP6 .designator ;0=1,1=0.0000
+TOP 0 0.58 0.965 0 N 3 5 TP6-1
+#
+# CMP 10
+CMP 13 0.403 0.591 270 N TP7 .designator ;0=1,1=0.0000
+TOP 0 0.403 0.591 0 N 11 0 TP7-1
+#

@@ -1,0 +1,43 @@
+Designator Footprint               Mid X         Mid Y         Ref X         Ref Y         Pad X         Pad Y TB      Rotation Comment        
+
+D40        VISHAY_PLCC2_A   -1276.417mil    716.732mil  -1276.417mil    716.732mil  -1221.299mil    716.732mil  B        180.00 LED            
+D39        VISHAY_PLCC2_A   -1443.898mil   2443.898mil  -1443.898mil   2443.898mil  -1388.822mil   2446.052mil  B        182.24 LED            
+D38        VISHAY_PLCC2_A   -1311.221mil   3832.677mil   -1311.22mil   3832.677mil  -1316.034mil   3887.585mil  B        275.01 LED            
+D37        VISHAY_PLCC2_A   -2234.724mil   1512.953mil  -2234.724mil   1512.953mil  -2234.724mil   1568.071mil  B        270.00 LED            
+D36        VISHAY_PLCC2_A   -2401.102mil   3434.173mil  -2401.102mil   3434.173mil  -2405.858mil   3489.086mil  B        274.95 LED            
+D35        VISHAY_PLCC2_A   -3100.275mil   2198.307mil  -3100.276mil   2198.307mil  -3140.017mil   2236.498mil  B        316.14 LED            
+D34        VISHAY_PLCC2_A   -4025.354mil   1478.189mil  -4025.354mil   1478.189mil  -4080.472mil   1478.189mil  B        360.00 LED            
+D33        VISHAY_PLCC2_A   -5267.677mil   2276.575mil  -5267.677mil   2276.575mil  -5322.795mil   2276.575mil  B        360.00 LED            
+D32        VISHAY_PLCC2_A   -5690.197mil   1330.866mil  -5690.197mil   1330.866mil  -5745.315mil   1330.866mil  B        360.00 LED            
+D31        VISHAY_PLCC2_A   -3317.323mil    718.425mil  -3317.323mil    718.425mil  -3372.441mil    718.425mil  B        360.00 LED            
+D30        VISHAY_PLCC2_A   -4850.197mil    711.654mil  -4850.197mil    711.654mil  -4850.197mil    656.535mil  B         90.00 LED            
+D29        VISHAY_PLCC2_A   -5690.197mil     90.984mil  -5690.197mil     90.984mil  -5745.315mil     90.984mil  B        360.00 LED            
+D28        VISHAY_PLCC2_A   -5267.677mil   -854.016mil  -5267.677mil   -854.016mil  -5322.795mil   -854.016mil  B        360.00 LED            
+D27        VISHAY_PLCC2_A   -4025.354mil    -53.543mil  -4025.354mil    -53.543mil  -4080.472mil    -53.543mil  B        360.00 LED            
+D26        VISHAY_PLCC2_A   -3100.276mil   -772.126mil  -3100.276mil   -772.126mil  -3138.467mil   -811.868mil  B         46.14 LED            
+D25        VISHAY_PLCC2_A   -2401.102mil   -2006.85mil  -2401.102mil   -2006.85mil  -2405.858mil  -2061.763mil  B         85.05 LED            
+D24        VISHAY_PLCC2_A   -2234.724mil    -81.614mil  -2234.724mil    -81.614mil  -2234.724mil   -136.732mil  B         90.00 LED            
+D23        VISHAY_PLCC2_A   -1311.221mil  -2403.543mil   -1311.22mil  -2403.543mil  -1316.034mil  -2458.451mil  B         84.99 LED            
+D22        VISHAY_PLCC2_A   -1443.898mil  -1009.803mil  -1443.898mil  -1009.803mil  -1388.821mil  -1011.957mil  B        177.76 LED            
+D21        VISHAY_PLCC2_A           0mil          0mil          0mil          0mil          0mil    -55.118mil  B         90.00 LED            
+D20        VISHAY_PLCC2_A           0mil  -1111.772mil          0mil  -1111.772mil    -55.118mil  -1111.772mil  B        360.00 LED            
+D19        VISHAY_PLCC2_A    1443.898mil  -1007.402mil   1443.898mil  -1007.402mil   1388.822mil  -1009.556mil  B          2.24 LED            
+D18        VISHAY_PLCC2_A     1311.22mil  -2401.338mil    1311.22mil  -2401.339mil   1316.034mil  -2456.246mil  B         95.01 LED            
+D17        VISHAY_PLCC2_A    2234.724mil    -77.913mil   2234.724mil    -77.913mil   2234.724mil   -133.031mil  B         90.00 LED            
+D16        VISHAY_PLCC2_A    2401.102mil  -2002.835mil   2401.102mil  -2002.835mil   2405.858mil  -2057.747mil  B         94.95 LED            
+D15        VISHAY_PLCC2_A    3100.275mil   -766.968mil   3100.276mil   -766.968mil   3140.018mil    -805.16mil  B        136.14 LED            
+D14        VISHAY_PLCC2_A    4025.354mil     -46.85mil   4025.354mil     -46.85mil   4080.472mil     -46.85mil  B        180.00 LED            
+D13        VISHAY_PLCC2_A    5267.677mil   -845.236mil   5267.677mil   -845.236mil   5322.795mil   -845.236mil  B        180.00 LED            
+D12        VISHAY_PLCC2_A    5690.197mil    100.472mil   5690.197mil    100.472mil   5745.315mil    100.472mil  B        180.00 LED            
+D11        VISHAY_PLCC2_A    4850.197mil    719.724mil   4850.197mil    719.724mil   4850.197mil    664.606mil  B         90.00 LED            
+D10        VISHAY_PLCC2_A    3317.323mil    718.425mil   3317.323mil    718.425mil   3372.441mil    718.425mil  B        180.00 LED            
+D9         VISHAY_PLCC2_A    5690.197mil   1340.354mil   5690.197mil   1340.354mil   5745.315mil   1340.354mil  B        180.00 LED            
+D8         VISHAY_PLCC2_A    5267.677mil   2285.354mil   5267.677mil   2285.354mil   5322.795mil   2285.354mil  B        180.00 LED            
+D7         VISHAY_PLCC2_A    4025.354mil   1484.921mil   4025.354mil   1484.921mil   4080.472mil   1484.921mil  B        180.00 LED            
+D6         VISHAY_PLCC2_A    3100.276mil   2203.465mil   3100.276mil   2203.465mil   3140.018mil   2241.656mil  B        223.86 LED            
+D5         VISHAY_PLCC2_A    2401.102mil   3438.189mil   2401.102mil   3438.189mil   2405.858mil   3493.101mil  B        265.05 LED            
+D4         VISHAY_PLCC2_A    2234.724mil   1512.953mil   2234.724mil   1512.953mil   2234.724mil   1568.071mil  B        270.00 LED            
+D3         VISHAY_PLCC2_A    1311.221mil   3834.882mil    1311.22mil   3834.882mil   1316.034mil   3889.789mil  B        264.99 LED            
+D2         VISHAY_PLCC2_A    1443.897mil   2441.142mil   1443.898mil   2441.142mil   1388.821mil   2443.296mil  B        357.76 LED            
+D1         VISHAY_PLCC2_A    1276.417mil    716.732mil   1276.417mil    716.732mil   1221.299mil    716.732mil  B        360.00 LED            
+

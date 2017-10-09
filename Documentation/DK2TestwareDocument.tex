@@ -1,0 +1,236 @@
+\documentclass[letterpaper]{article}
+\usepackage{bytefield}
+\usepackage{mathtools}
+\usepackage{ifxetex}
+\ifxetex
+  \usepackage{fontspec}
+  \setmainfont[ExternalLocation=../Common/, 
+  					  Ligatures =TeX,
+					  BoldFont = Cabin-Bold.ttf,
+					  ItalicFont = Cabin-Italic.ttf,
+					  BoldItalicFont = Cabin-BoldItalic.ttf ]
+					  {Cabin-Regular.ttf}
+\fi
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage[table]{xcolor}
+\usepackage{hyperref}
+\usepackage{parskip}
+\usepackage{tikz}
+\usetikzlibrary{automata,positioning,fit}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\definecolor{lightgray}{gray}{0.8}
+\renewcommand{\arraystretch}{1.25}
+
+\begin{document}
+
+\title{\huge DK2 Testware Document}
+\author{Anusha Balan}
+\date{Revision 0.1\\
+18 August 2014}
+
+\begin{figure}
+\includegraphics[width=5in]{../Common/oculus.png}
+\end{figure}
+
+\maketitle
+\thispagestyle{empty}
+
+\lfoot{DK2 Testware Document}
+\cfoot{}
+\rfoot{\thepage}
+
+\newpage
+
+\tableofcontents
+
+\newpage
+
+\section{Revision History}
+
+\begin{center}
+    \begin{tabular}{ | l | l | p{8cm} |}
+    \hline
+    \cellcolor{lightgray} Revision & \cellcolor{lightgray} Date & \cellcolor{lightgray} Description \\ \hline
+    0.1 & 18-08-2014 & Preliminary document. \\ \hline
+    \end{tabular}
+\end{center}
+
+\newpage
+
+\section{Introduction}
+
+The Rift DK2 is interfaced using USB HID with a 1000 Hz polling rate.  The manufacturing feature report is set and checked for in the factory at different test stations using Feature Report Gets and Sets.  For more information about the various other feature reports, see the DK2 Firmware Specification document. This document details the tests available in the factory and the data saved in the manufacturing report regarding each of these tests. 
+
+\begin{itemize}
+    \item {\bfseries Vendor ID:} {\em 0x2833}
+    \item {\bfseries Product ID:} {\em 0x0021}
+    \item {\bfseries Vendor String:} {\em Oculus VR, Inc.}
+    \item {\bfseries Product String:} {\em Rift DK2}
+\end{itemize}
+
+\newpage
+
+\section{Manufacturing Report}
+
+The 16 byte Manufacturing report has a ReportID of 18.  It is used to record and display the results of each stage of the production of the DK2 product that has USB access. Stage, in this document, refers to the type of test performed along the factory floor and may consist of several stations (operators) each of which handle one HMD. The manufacturing report for each stage is read by successive calls to the manufacturing report to get the report from each stage present. EG on power on, reading the manufacturing report twice will return the manufacturing report for stange 0 and 1. \\
+
+\begin{bytefield}[leftcurly=.,bitwidth=1.1em]{32}
+         \bitheader{0-31} \\
+	\begin{leftwordgroup}{0}
+           \bitbox{8}{ReportID = 18} & \bitbox{16}{CommandID} & \bitbox{8}{NumStages}
+	\end{leftwordgroup} \\
+	\begin{leftwordgroup}{4}
+           \bitbox{8}{Stage} & \bitbox{8}{StageVersion} & \bitbox{16}{StageLocation}
+         \end{leftwordgroup} \\
+	\begin{leftwordgroup}{8}
+           \bitbox{32}{StageTime}
+         \end{leftwordgroup} \\
+	\begin{leftwordgroup}{12}
+           \bitbox{32}{Result}
+         \end{leftwordgroup} \\
+\end{bytefield}
+
+\begin{itemize}
+    \item {\bfseries ReportID} (8 bits): The USB Report ID for this report is 18.
+    \item {\bfseries CommandID} (16 bits): A sequence number that is then repeated in the LastCommandID field of the HID IN Report.
+    \item {\bfseries NumStages = 6} (8 bits)(Read only): The number of stages of production being recorded on the product. In DK2, the number of stages that are being stored are the number of active tests, utilizing USB HID interface. The number of such active tests in the current DK2 production line is 6\footnote{Reference: Berway Dongguan Factory Audit - 2014.07.09}.
+    
+    \item {\bfseries Stage} (8 bits): The specific stage number being recorded or read from.  This autoincrements on reads, and gets set to the written value on writes. The default before writing is 0. 
+    \item {\bfseries StageVersion} (8 bits): The version of the specific manufacturing test, along with their stage numbers can be referred to from this table. The default before writing is 0. Table below also provides the cross-reference between the active test and their corresponding stage value for the 8 bits of Stage.
+        \begin{center}
+            \begin{tabular}{ | p{0.8cm} | p{1.4cm} | p{2.1cm} | l | p{1.7cm} | p{2.2cm} |}
+            \hline
+            \cellcolor{lightgray} Stage Type &  \cellcolor{lightgray} Stage   Location & \cellcolor{lightgray} Software & \cellcolor{lightgray}Version & \cellcolor{lightgray} Version Date & \cellcolor{lightgray} Description \\ \hline
+            1 & F2A-6 & FrontShell LED Test & 1 & 2014-05-20 & Preliminary software. \\ \hline
+            2 & F2B-1 & Shake Test & 1 & 2014-07-10 & Python GUI. \\ \hline
+            3 & F2B-21 & LED Light Box & 1 & 2014-05-20 & Preliminary software. \\ \hline
+            4 & F2C-3 & Magnetometer Calibration & 2 & 2014-06-30 & Software update. \\ \hline
+            5 & F2C-11 & Bundle Adjustment & 2 & 2014-07-11 & Software update \\ \hline
+            6 & F2C-18 & Print Station & 3 & 2014-08-11 & Updated bundle adjustment check in Printer software. \\ \hline
+            \end{tabular}
+        \end{center}
+  
+    \item {\bfseries StationLocation} (16 bits): This is a bit mask representing line, location in the line and machine this test was performed on. The line tags and the exact stage number for each of the stations is available in the "Berway Dongguan Factory Audit - 2014.07.09" document. 
+        \begin{center}
+            \begin{tabular}{ | p{2cm} | l | l | l | p{3.5cm} |}
+            \hline
+            \cellcolor{lightgray} Line Number (LNum) & \cellcolor{lightgray} Line Tag \\ \hline
+            1 & F2A \\ \hline
+            2 & F2B \\ \hline
+            3 & F2C \\ \hline
+            4 & F3A \\ \hline
+            5 & F3B \\ \hline
+            6 & F3C \\ \hline
+            \end{tabular}
+        \end{center}
+  
+  The 16 bits of StationLocation are divided into Line number (LNum), factory stage number (FSNum) and machine id. Each stage may have more than one station, each station being identified by the MSB of the machine ID of the machine, the test is tied to. \\
+  
+    \begin{center}
+        \begin{bytefield}[leftcurly=.,bitwidth=1.1em]{16}
+             \bitheader{0-15} \\
+        \begin{leftwordgroup}{0}
+               \bitbox{3}{LNum} & \bitbox{5}{FSNum} & \bitbox{8}{Machine ID MSB}
+        \end{leftwordgroup} \\
+        \end{bytefield}
+    \end{center}
+    \item {\bfseries StageTime} (32 bits): The UNIX 32 bit time at which the stage was performed.
+    \item {\bfseries Result} (32 bits): The following table provides details of the error codes available in Front Shell LED Test.
+    \item {\bfseries Result} (32 bits): The following table provides details of the error codes available in Shake Test.
+    
+        \begin{minipage}{\linewidth}
+            \centering
+                \begin{tabular}{ | l | p{5cm} |}
+                \hline
+                \cellcolor{lightgray} Error Code & \cellcolor{lightgray} Description \\ \hline
+                0x0 & Default \\ \hline
+                0x1 & OK \\ \hline
+                0x2 & Read Error \\ \hline
+                0x3 & Out of Range Error \\ \hline
+                0x4 & Update Error \\ \hline
+                0x5 & INReport Unpack Error \\ \hline
+                0x6 & Multiple HMD Error \\ \hline
+                0x7 & Disconnected Error \\ \hline
+                0x8 & No Movement Error \\ \hline
+                0x9 & Zero value error \\ \hline
+                \end{tabular}\par
+            \bigskip
+            Shake Test Error Codes
+            \end{minipage}
+
+    \item {\bfseries Result} (32 bits): The following table provides details of the error codes available in LED LightBox Test.
+    
+        \begin{minipage}{\linewidth}
+            \centering
+                \begin{tabular}{ | l | p{5cm} |}
+                \hline
+                \cellcolor{lightgray} Error Code & \cellcolor{lightgray} Description \\ \hline
+                0x0 & Default \\ \hline
+                0x1 & OK \\ \hline
+                0x2 & Calibration Save Error \\ \hline
+                0x3 & No Camera Error \\ \hline
+                0x4 & Calibration Failed \\ \hline
+                \end{tabular}\par
+            \bigskip
+            LED Lightbox Test Error Codes
+        \end{minipage}
+    
+    \item {\bfseries Result} (32 bits): The following table provides details of the error codes available in Magnetometer Calibration.
+    
+        \begin{minipage}{\linewidth}
+            \centering
+                \begin{tabular}{ | l | p{5cm} |}
+                \hline
+                \cellcolor{lightgray} Error Code & \cellcolor{lightgray} Description \\ \hline
+                0x0 & Default \\ \hline
+                0x1 & OK \\ \hline
+                0x0 & No Data \\ \hline
+                0x2 & Mag Sanity Fail \\ \hline
+                0x3 & Mag Length Fail \\ \hline
+                0x4 & Mag Angle Fail \\ \hline
+                \end{tabular}\par
+            \bigskip
+            Magnetometer Calibration Test Error Codes
+        \end{minipage}
+
+    \item {\bfseries Result} (32 bits): The following error code tables provide the correlation of the error codes in Bundle Adjustment Station.
+    
+        \begin{minipage}{\linewidth}
+            \centering
+                \begin{tabular}{ | l | p{5cm} |}
+                \hline
+                \cellcolor{lightgray} Error Code & \cellcolor{lightgray} Description \\ \hline
+                0x0 & Default \\ \hline
+                0x1 & OK \\ \hline
+                0x2 & Bundle Empty \\ \hline
+                0x3 & Optimization Failed \\ \hline
+                0x4 & Bad LED Position \\ \hline
+                0x5 & Bad Camera Params \\ \hline
+                \end{tabular}\par
+            \bigskip
+            Bundle Adjustment Station Error Codes
+        \end{minipage}
+
+    \item {\bfseries Result} (32 bits): The following error code tables provide the correlation of the error codes in Label Printer Station.
+    
+        \begin{minipage}{\linewidth}
+            \centering
+                \begin{tabular}{ | l | p{5cm} |}
+                \hline
+                \cellcolor{lightgray} Error Code & \cellcolor{lightgray} Description \\ \hline
+                0x0 & Default \\ \hline
+                0x1 & OK \\ \hline
+                0x2 & BarTender Not Installed \\ \hline
+                0x3 & HMD Position Calibration Error \\ \hline
+                0x4 & HMD MagCalibration Error \\ \hline
+                0x5 & Multiple HMD Error \\ \hline
+                \end{tabular}\par
+            \bigskip
+            Label Printer Station Error Codes
+        \end{minipage}
+        
+\end{itemize}
+
+\end{document}

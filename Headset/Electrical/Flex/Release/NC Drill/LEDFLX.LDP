@@ -1,0 +1,3 @@
+Layer Pairs Export File for PCB: C:\perforce\depot\Hardware\PCB\Projects\Experimental\LED\LEDFLX001\trunk\LEDFLX.PcbDoc
+LayersSetName=Top_Bot_Thru_Holes|DrillFile=ledflx-roundholes.txt|LayerPairs=gtl,gbl
+LayersSetName=Top_Bot_Slot_Holes|DrillFile=ledflx-slotholes.txt|LayerPairs=gtl,gbl
